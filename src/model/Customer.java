@@ -27,5 +27,20 @@ public String toString() {
         e.printStackTrace();
     }
 }    
+    public String getUserEmail() {
+        return userEmail;
     }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
+}
 
