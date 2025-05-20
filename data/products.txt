@@ -1,0 +1,20 @@
+p001,iPhoneX,Smartphone,iPhone X 64GB,699.99,999.99,30.0,245
+p002,GalaxyS21,Smartphone,Samsung Galaxy S21 128GB,749.99,899.99,16.67,198
+p003,iPadPro11,Tablet,iPad Pro 11-inch 256GB,899.99,999.99,10.0,156
+p004,SurfacePro7,Tablet,Microsoft Surface Pro 7 128GB,749.99,899.99,16.67,122
+p005,MacBookAir,Laptop,MacBook Air M1 256GB,949.99,1099.99,13.64,287
+p006,XPS13,Laptop,Dell XPS 13 512GB,1099.99,1299.99,15.38,165
+p007,AirPodsMax,Headphones,Apple AirPods Max,479.99,549.99,12.73,98
+p008,QC45,Headphones,Bose QuietComfort 45,299.99,349.99,14.29,143
+p009,GalaxyWatch4,Smartwatch,Samsung Galaxy Watch 4 44mm,229.99,279.99,17.86,76
+p010,AppleWatch7,Smartwatch,Apple Watch Series 7 45mm,399.99,429.99,6.98,187
+p011,PS5,Console,PlayStation 5 Digital Edition,399.99,399.99,0.0,312
+p012,XboxSeriesX,Console,Xbox Series X 1TB,499.99,499.99,0.0,274
+p013,NintendoSwitch,Console,Nintendo Switch OLED Model,349.99,349.99,0.0,198
+p014,SonyA7IV,Camera,Sony Alpha a7 IV Mirrorless Camera,2399.99,2499.99,4.0,87
+p015,CanonR6,Camera,Canon EOS R6 Mirrorless Camera,2299.99,2499.99,8.0,92
+p016,DJIMini3,Drone,DJI Mini 3 Pro,699.99,759.99,7.89,64
+p017,SonyWF1000XM4,Earbuds,Sony WF-1000XM4 Earbuds,249.99,279.99,10.71,118
+p018,LGC1,TV,LG C1 65-inch OLED 4K TV,1799.99,2499.99,28.0,153
+p019,SamsungQN90A,TV,Samsung QN90A 55-inch Neo QLED 4K TV,1299.99,1799.99,27.78,127
+p020,SonySRS-XB33,Speaker,Sony SRS-XB33 Portable Bluetooth Speaker,99.99,149.99,33.33,56
