@@ -1,4 +1,6 @@
 import java.util.*;
+
+
 public class IOInterface {
     
     private static IOInterface instance;
@@ -39,7 +41,7 @@ public class IOInterface {
         System.out.println("(3) Quit");
         System.out.print("Choose an option: ");
     }
-
+    
     //adminMenu
     public void adminMenu() {
         System.out.println("\n===== Admin Menu =====");
@@ -86,13 +88,17 @@ public class IOInterface {
         System.out.println(message);
     }
     public static void main(String[] args) {
-        IOInterface io = IOInterface.getInstance();
-        
-        
-UsersOperation userOps = UsersOperation.getInstance();
-    Scanner scanner = new Scanner(System.in);
+IOInterface io = IOInterface.getInstance();
+        UsersOperation userOps = UsersOperation.getInstance();
+        CustomerOperation customerOps = CustomerOperation.getInstance();
+        Scanner scanner = new Scanner(System.in);
 
-    switch (choice) {
+        while (true) {
+            io.mainMenu();
+            String[] input = io.getUserInput("", 1);
+            String choice = input[0];
+
+            switch (choice) {
                 case "1": {
                     String[] loginInfo = io.getUserInput("Enter username and password", 2);
                     String username = loginInfo[0];
@@ -163,9 +169,43 @@ UsersOperation userOps = UsersOperation.getInstance();
                                 if (adminChoice.equals("8")) break;
                             }
 
-                        } else if (user instanceof Customer) {
-                            io.customerMenu();
-                            // Optional: add customer menu logic
+                        } 
+else if (user instanceof Customer) {
+                            while (true) {
+                                io.customerMenu();
+                                String[] customerInput = io.getUserInput("", 1);
+                                String customerChoice = customerInput[0];
+
+                                switch (customerChoice) {
+                                    case "1":
+                                        io.printMessage("Your profile:\n" + user.toString());
+                                        break;
+
+                                    case "2": {
+                                        String[] updateInfo = io.getUserInput("Enter new email and mobile", 2);
+                                        boolean updatedEmail = customerOps.updateProfile("userEmail", updateInfo[0], (Customer) user);
+                                        boolean updatedMobile = customerOps.updateProfile("userMobile", updateInfo[1], (Customer) user);
+
+                                        if (updatedEmail && updatedMobile) {
+                                            io.printMessage("Profile updated successfully.");
+                                        } else {
+                                            io.printErrorMessage("Update Profile", "One or more fields failed to update.");
+                                        }
+                                        break;
+                                    }
+
+                                    
+
+                                    case "6":
+                                        io.printMessage("Logging out...");
+                                        break;
+
+                                    default:
+                                        io.printErrorMessage("Customer Menu", "Invalid option.");
+                                }
+
+                                if (customerChoice.equals("6")) break;
+                            }
                         }
 
                     } else {
