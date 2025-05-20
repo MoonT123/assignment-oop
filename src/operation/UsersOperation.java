@@ -1,3 +1,4 @@
+package operation;
 import java.util.Random;
 import java.io.BufferedReader;
 import java.io.File;
@@ -5,6 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.json.*;
+
+import model.Customer;
+import model.Users;;
 public class UsersOperation {
     
      
@@ -136,8 +142,41 @@ public boolean validateName(String username) {
         }
     return true;
         }
-        //
+      public Users login(String userName, String userPassword) {
+    File file = new File("users.txt");
+    if (!file.exists()) return null;
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            JSONObject obj = new JSONObject(line);
+
+            if (obj.getString("user_name").equals(userName)) {
+                String encryptedPassword = obj.getString("user_password");
+                String decrypted = decryptpassword(encryptedPassword);
+
+                if (decrypted.equals(userPassword)) {
+                    String userId = obj.getString("user_id");
+                    String role = obj.getString("user_role");
+
+                    if (role.equals("admin")) {
+                        return new Admin(userId, userName, encryptedPassword, role);
+                    } else {
+                        String email = obj.optString("user_email", "");
+                        String mobile = obj.optString("user_mobile", "");
+                        return new Customer(userId, userName, encryptedPassword, role, email, mobile);
+                    }
+                }
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return null;
 }
+}
+
 
 
 
