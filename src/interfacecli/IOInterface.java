@@ -92,50 +92,114 @@ public class IOInterface {
 UsersOperation userOps = UsersOperation.getInstance();
     Scanner scanner = new Scanner(System.in);
 
-    while (true) {
-        io.mainMenu();
-        String[] input = io.getUserInput("", 1);
-        String choice = input[0];
+    switch (choice) {
+                case "1": {
+                    String[] loginInfo = io.getUserInput("Enter username and password", 2);
+                    String username = loginInfo[0];
+                    String password = loginInfo[1];
 
-        switch (choice) {
-           case "1": 
-    String[] loginInfo = io.getUserInput("Enter username and password ", 2);
-    String username = loginInfo[0];
-    String password = loginInfo[1];
+                    Users user = userOps.login(username, password);
+                    if (user != null) {
+                        io.printMessage("Login successful");
 
-    Users user = userOps.login(username, password); 
-    if (user != null) {
-        io.printMessage("Login successful");
-        
-        // Kiểm tra loại user
-        if (user instanceof Admin) {
-            io.adminMenu();
-        } else if (user instanceof Customer) {
-            io.customerMenu();
+                        if (user instanceof Admin) {
+                            while (true) {
+                                io.adminMenu();
+                                String[] adminInput = io.getUserInput("", 1);
+                                String adminChoice = adminInput[0];
+
+                                switch (adminChoice) {
+                                    case "2": {
+                                        String[] regInfo = io.getUserInput("Enter username password email mobile", 4);
+                                        boolean registered = customerOps.registerCustomer(
+                                            regInfo[0], regInfo[1], regInfo[2], regInfo[3]);
+
+                                        if (registered) {
+                                            io.printMessage("Customer registered successfully.");
+                                        } else {
+                                            io.printErrorMessage("Register", "Failed to register customer.");
+                                        }
+                                        break;
+                                    }
+
+                                    case "3": {
+                                        int page = 1;
+                                        while (true) {
+                                            CustomerListResult result = customerOps.getCustomerList(page);
+                                            List<Customer> customers = result.getCustomers();
+
+                                            if (customers.isEmpty()) {
+                                                io.printMessage("No customers found.");
+                                                break;
+                                            }
+
+                                            io.showList("Admin", "Customer", customers,
+                                                result.getCurrentPage(), result.getTotalPages());
+
+                                            String[] nav = io.getUserInput("Enter N (next), P (previous), or Q (quit)", 1);
+                                            String navChoice = nav[0].trim().toUpperCase();
+
+                                            if (navChoice.equals("N") && page < result.getTotalPages()) {
+                                                page++;
+                                            } else if (navChoice.equals("P") && page > 1) {
+                                                page--;
+                                            } else if (navChoice.equals("Q")) {
+                                                break;
+                                            } else {
+                                                io.printMessage("Invalid input or no more pages.");
+                                            }
+                                        }
+                                        break;
+                                    }
+
+                                    case "8":
+                                        io.printMessage("Logging out...");
+                                        break;
+
+                                    default:
+                                        io.printErrorMessage("Admin Menu", "Invalid option");
+                                }
+
+                                if (adminChoice.equals("8")) break;
+                            }
+
+                        } else if (user instanceof Customer) {
+                            io.customerMenu();
+                            // Optional: add customer menu logic
+                        }
+
+                    } else {
+                        io.printErrorMessage("Login", "Invalid username or password");
+                    }
+                    break;
+                }
+
+                case "2": {
+                    String[] registerInfo = io.getUserInput("Enter username password email mobile", 4);
+                    boolean registered = customerOps.registerCustomer(
+                        registerInfo[0], registerInfo[1], registerInfo[2], registerInfo[3]);
+
+                    if (registered) {
+                        io.printMessage("Register successful");
+                    } else {
+                        io.printErrorMessage("Register", "Failed to register user");
+                    }
+                    break;
+                }
+
+                case "3": {
+                    io.printMessage("Exiting the program.");
+                    scanner.close();
+                    System.exit(0);
+                    break;
+                }
+
+                default:
+                    io.printErrorMessage("Main Menu", "Invalid option");
+            }
         }
-    } else {
-        io.printErrorMessage("Login", "Invalid username or password");
     }
-    break;
-     case "2": 
-    String[] registerInfo = io.getUserInput("Enter username password email mobile", 4);
-    String regUsername = registerInfo[0];
-    String regPassword = registerInfo[1];
-    String regEmail = registerInfo[2];
-    String regMobile = registerInfo[3];
-    CustomerOperation customerOps = CustomerOperation.getInstance();
-    boolean registered = customerOps.registerCustomer(regUsername, regPassword, regEmail, regMobile);
-    if (registered) {
-        io.printMessage("Register successful");
-    } else {
-        io.printErrorMessage("Register", "Failed to register user");
-    }
-    break;
-    case "3": 
-    io.printMessage("Exiting the program");
-    scanner.close();  
-    System.exit(0);
-    break;
+}
 }
 
 
