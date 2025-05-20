@@ -1,3 +1,5 @@
+package model;
+
 public  class Users {
     protected String userid;
     protected String username;
