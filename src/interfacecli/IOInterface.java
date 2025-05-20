@@ -1,23 +1,15 @@
-package interfacecli;
-
-
-import java.util.List;
-import java.util.Scanner;
-
-
-
+import java.util.*;
 public class IOInterface {
-    private static IOInterface instance = null;
+    
+    private static IOInterface instance;
     private Scanner scanner;
 
+    
     private IOInterface() {
         scanner = new Scanner(System.in);
     }
 
-    /**
-     * Returns the single instance of IOInterface.
-     * @return IOInterface instance
-     */
+    
     public static IOInterface getInstance() {
         if (instance == null) {
             instance = new IOInterface();
@@ -25,116 +17,78 @@ public class IOInterface {
         return instance;
     }
 
-    /**
-     * Accept user input.
-     * @param message The message to display for input prompt
-     * @param numOfArgs The number of arguments expected
-     * @return An array of strings containing the arguments
-     */
+    // getUserInput()
     public String[] getUserInput(String message, int numOfArgs) {
-        System.out.print(message);
-        String input = scanner.nextLine().trim();
-        String[] tokens = input.split("\\s+");
+        System.out.print(message + ": ");
+        String inputLine = scanner.nextLine().trim();
+        String[] inputs = inputLine.split("\\s+");
+
         String[] result = new String[numOfArgs];
         for (int i = 0; i < numOfArgs; i++) {
-            if (i < tokens.length) {
-                result[i] = tokens[i];
-            } else {
-                result[i] = "";
-            }
+            result[i] = (i < inputs.length) ? inputs[i] : "";
         }
+
         return result;
     }
 
-    /**
-     * Display the login menu with options: (1) Login, (2) Register, (3) Quit.
-     * The admin account cannot be registered.
-     */
+    //mainMenu()
     public void mainMenu() {
-        System.out.println("===== Main Menu =====");
-        System.out.println("1. Login");
-        System.out.println("2. Register (Admin account cannot be registered)");
-        System.out.println("3. Quit");
-        System.out.print("Select an option: ");
+        System.out.println("\n===== Main Menu =====");
+        System.out.println("(1) Login");
+        System.out.println("(2) Register");
+        System.out.println("(3) Quit");
+        System.out.print("Choose an option: ");
     }
 
-    /**
-     * Display the admin menu with options.
-     */
+    //adminMenu()
     public void adminMenu() {
-        System.out.println("===== Admin Menu =====");
-        System.out.println("1. Show products");
-        System.out.println("2. Add customers");
-        System.out.println("3. Show customers");
-        System.out.println("4. Show orders");
-        System.out.println("5. Generate test data");
-        System.out.println("6. Generate all statistical figures");
-        System.out.println("7. Delete all data");
-        System.out.println("8. Logout");
-        System.out.print("Select an option: ");
+        System.out.println("\n===== Admin Menu =====");
+        System.out.println("(1) Show products");
+        System.out.println("(2) Add customers");
+        System.out.println("(3) Show customers");
+        System.out.println("(4) Show orders");
+        System.out.println("(5) Generate test data");
+        System.out.println("(6) Generate all statistical figures");
+        System.out.println("(7) Delete all data");
+        System.out.println("(8) Logout");
+        System.out.print("Choose an option: ");
     }
 
-    /**
-     * Display the customer menu with options.
-     */
+    //customerMenu()
     public void customerMenu() {
-        System.out.println("===== Customer Menu =====");
-        System.out.println("1. Show profile");
-        System.out.println("2. Update profile");
-        System.out.println("3. Show products (user input could be \"3 keyword\" or \"3\")");
-        System.out.println("4. Show history orders");
-        System.out.println("5. Generate all consumption figures");
-        System.out.println("6. Logout");
-        System.out.print("Select an option: ");
+        System.out.println("\n===== Customer Menu =====");
+        System.out.println("(1) Show profile");
+        System.out.println("(2) Update profile");
+        System.out.println("(3) Show products (optionally with keyword)");
+        System.out.println("(4) Show history orders");
+        System.out.println("(5) Generate all consumption figures");
+        System.out.println("(6) Logout");
+        System.out.print("Choose an option: ");
     }
 
-    /**
-     * Prints out different types of lists (Customer, Product, Order).
-     * Shows row number, page number, and total page number.
-     * @param userRole The role of the current user
-     * @param listType The type of list to display
-     * @param objectList The list of objects to display
-     * @param pageNumber The current page number
-     * @param totalPages The total number of pages
-     */
-    public void showList(String userRole, String listType, List<?> objectList,
-                        int pageNumber, int totalPages) {
-        System.out.println("===== " + listType + " List (Page " + pageNumber + " of " + totalPages + ") =====");
-        int rowNum = 1;
+    //showList()
+    public void showList(String userRole, String listType, List<?> objectList, int pageNumber, int totalPages) {
+        System.out.println("\n--- " + listType + " List for " + userRole + " ---");
+        int index = 1;
         for (Object obj : objectList) {
-            System.out.println((rowNum++) + ". " + obj.toString());
+            System.out.println((index++) + ". " + obj.toString());
         }
-        if (objectList.isEmpty()) {
-            System.out.println("No " + listType.toLowerCase() + "s to display.");
-        }
+        System.out.println("Page " + pageNumber + " of " + totalPages);
     }
 
-    /**
-     * Prints out an error message and shows where the error occurred.
-     * @param errorSource The source of the error
-     * @param errorMessage The error message
-     */
+    //printErrorMessage()
     public void printErrorMessage(String errorSource, String errorMessage) {
-        System.out.println("[ERROR] (" + errorSource + "): " + errorMessage);
+        System.out.println("[ERROR] " + errorSource + ": " + errorMessage);
     }
 
-    /**
-     * Print out the given message.
-     * @param message The message to print
-     */
+    //printMessage()
     public void printMessage(String message) {
         System.out.println(message);
     }
-
-    /**
-     * Print out the object using the toString() method.
-     * @param targetObject The object to print
-     */
-    public void printObject(Object targetObject) {
-        if (targetObject != null) {
-            System.out.println(targetObject.toString());
-        } else {
-            System.out.println("null");
-        }
+    public static void main(String[] args) {
+        IOInterface io = IOInterface.getInstance();
+        io.mainMenu();
     }
+
 }
+ 
