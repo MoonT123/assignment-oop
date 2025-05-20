@@ -105,7 +105,7 @@ UsersOperation userOps = UsersOperation.getInstance();
 
     Users user = userOps.login(username, password); 
     if (user != null) {
-        io.printMessage("✅ Login successful");
+        io.printMessage("Login successful");
         
         // Kiểm tra loại user
         if (user instanceof Admin) {
