@@ -13,21 +13,14 @@ abstract class Users {
     this.userpassword = userpassword;
     this.userRegisterTime = userRegisterTime;
     this.userRole = userRole;
-    if (!userid.matches("u_\\d{10}")){
-         throw new IllegalArgumentException("Error");
-
+   @Override
+    public String toString() {
+        return String.format(
+            "{\"user_id\":\"%s\", \"user_name\":\"%s\", \"user_password\":\"%s\", \"user_register_time\":\"%s\", \"user_role\":\"%s\"}",
+            userid, username, userpassword, userRegisterTime, userRole
+        );
     }
-    if (username == null|| username.isEmpty() ){
-        throw new IllegalArgumentException("your name can not be empty");
-    }
-    if (userpassword == null|| userpassword.isEmpty() ){
-        throw new IllegalArgumentException("your password can not be empty");
-    }
-    
-
-}
-public void setRegisterTimeNow() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        this.userRegisterTime = LocalDateTime.now().format(formatter);
+    public String getUserRole() {
+        return userRole;
     }
 }
